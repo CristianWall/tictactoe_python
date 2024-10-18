@@ -5,13 +5,11 @@ from config import Nombres
 def mostrar_ganador(jugador):
     pygame.init()
 
-    # dimensiones de la ventana
     ANCHO_PANTALLA = 800
     ALTO_PANTALLA = 600
     pantalla = pygame.display.set_mode((ANCHO_PANTALLA, ALTO_PANTALLA))
     pygame.display.set_caption("Ganador")
 
-    # cargar fuente
     fuente = pygame.font.Font(None, 50)
 
     mensaje = "GANADOR"
@@ -33,10 +31,8 @@ def mostrar_ganador(jugador):
                     pygame.quit()
                     return
 
-        # rellenar pantalla de amarillo
         pantalla.fill((242, 213, 84))
 
-        # renderizar mensajes
         texto_mensaje = fuente.render(mensaje, True, (255, 255, 255))
         texto_rect = texto_mensaje.get_rect(center=(ANCHO_PANTALLA // 2, ALTO_PANTALLA // 2 - 20))
         pantalla.blit(texto_mensaje, texto_rect)
@@ -45,7 +41,6 @@ def mostrar_ganador(jugador):
         texto_rect_jugador = texto_ganador_render.get_rect(center=(ANCHO_PANTALLA // 2, ALTO_PANTALLA // 2 + 20))
         pantalla.blit(texto_ganador_render, texto_rect_jugador)
 
-        # dibujar boton "volver"
         rojo = (243, 109, 127)
         blanco = (255, 255, 255)
         pygame.draw.rect(pantalla, rojo, (ANCHO_PANTALLA // 2 - 50, ALTO_PANTALLA - 60, 100, 50), border_radius=10)

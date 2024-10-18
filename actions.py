@@ -17,11 +17,11 @@ def ACTIONS(s):
     
     return movimientos_legales
 
-# Ejemplo de uso
+# ejemploo
 estado = [['vacio', 'vacio', 'X'],
           ['vacio', 'vacio', 'O'],
           ['vacio', 'vacio', 'vacio']]
 
-# Determina los movimientos legales
+# movimeintos legales
 movimientos = ACTIONS(estado)
 print(f"Movimientos legales: {movimientos}")

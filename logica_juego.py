@@ -87,11 +87,22 @@ def RESULT(s, a, jugador):
 
 def TERMINAL(s):
     def verificar_victoria(s, jugador):
-        for i in range(3):
-            if all(s[i][j] == jugador for j in range(3)) or  all(s[j][i] == jugador for j in range(3)):
-                return True
-        if all(s[i][i] == jugador for i in range(3)) or all(s[i][2 - i] == jugador for i in range(3)):
-            return True
+        for i in range(6):
+            for j in range(4):  
+                if all(s[i][j+k] == jugador for k in range(3)):
+                    return True
+        for i in range(4):  
+            for j in range(6):
+                if all(s[i+k][j] == jugador for k in range(3)):
+                    return True
+        for i in range(4):  
+            for j in range(4):
+                if all(s[i+k][j+k] == jugador for k in range(3)):
+                    return True
+        for i in range(4): 
+            for j in range(2, 6):
+                if all(s[i+k][j-k] == jugador for k in range(3)):
+                    return True
         return False
 
     for jugador in ['X', 'O']:
@@ -102,6 +113,7 @@ def TERMINAL(s):
         return True
     
     return False
+
 
 
 def UTILITY(s):

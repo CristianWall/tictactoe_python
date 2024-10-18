@@ -1,7 +1,8 @@
 import pygame
 import logica_juego
-import ganador
-import random
+import ganador 
+import random 
+
 
 pygame.init()
 
@@ -14,30 +15,39 @@ blanco = (255, 255, 255)
 ANCHO_PANTALLA = 800
 ALTO_PANTALLA = 600
 pantalla = pygame.display.set_mode((ANCHO_PANTALLA, ALTO_PANTALLA))
-pygame.display.set_caption("Tres en Raya 6x6")
+pygame.display.set_caption("Tres en Raya")
 
 def sorteo_inicial():
-    return 'X' if random.choice([True, False]) else 'O'  # elige aleatoriamente
+    return 'X' if random.choice([True, False]) else 'O'  # elige aleatoriamente 
 fuente = pygame.font.Font(None, 50)
 
 def main(modo):
     global modo_juego
     modo_juego = modo
 
-    matriz_letras = [['vacio' for _ in range(6)] for _ in range(6)]
-    matriz_colores = [[gris for _ in range(6)] for _ in range(6)]
+    matriz_letras = [
+        ['vacio', 'vacio', 'vacio'],
+        ['vacio', 'vacio', 'vacio'],
+        ['vacio', 'vacio', 'vacio']
+    ]
+
+    matriz_colores = [
+        [gris, gris, gris],
+        [gris, gris, gris],
+        [gris, gris, gris]
+    ]
 
     inicia = sorteo_inicial()  
     turno_jugador = inicia == 'X'  
     ejecutando = True
+    turno_jugador = inicia == 'X'  
 
     ancho_rect = 80
     alto_rect = 80
-    distancia = 10  
-    total_ancho = (ancho_rect * 6) + (distancia * 5)
+    distancia = 15
+    total_ancho = (ancho_rect * 3) + (distancia * 2)
     inicio_x = (ANCHO_PANTALLA - total_ancho) // 2
-    inicio_y = (ALTO_PANTALLA - (alto_rect * 6) - (distancia * 5)) // 2
-
+    inicio_y = (ALTO_PANTALLA - (alto_rect * 3) - (distancia * 2)) // 2
     if inicia == 'O' and modo_juego != '2vs2':
         movimiento_ia = logica_juego.IA_NORMAL(matriz_letras)
         if movimiento_ia:
@@ -48,13 +58,21 @@ def main(modo):
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 ejecutando = False
+            
+            ancho_rect = 80
+            alto_rect = 80
+            distancia = 15
 
+            total_ancho = (ancho_rect * 3) + (distancia * 2)
+            inicio_x = (ANCHO_PANTALLA - total_ancho) // 2
+            inicio_y = (ALTO_PANTALLA - (alto_rect * 3) - (distancia * 2)) // 2
+            
             if modo_juego == '2vs2' or (modo_juego != '2vs2' and turno_jugador):
                 if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
                     mouse_x, mouse_y = evento.pos
 
-                    for fila in range(6):
-                        for col in range(6):
+                    for fila in range(3):
+                        for col in range(3):
                             rect_x = inicio_x + col * (ancho_rect + distancia)
                             rect_y = inicio_y + fila * (alto_rect + distancia)
 
@@ -89,16 +107,13 @@ def main(modo):
             if logica_juego.TERMINAL(matriz_letras):
                 ganador_jugador = 'X' if not turno_jugador else 'O'
                 ganador.mostrar_ganador(ganador_jugador)  
-                
         pantalla.fill(amarillo)
         jugador_actual = 'X' if turno_jugador else 'O'
         texto_turno = fuente.render(f'Turno de: {jugador_actual}', True, blanco)
-        texto_turno_rect = texto_turno.get_rect(center=(ANCHO_PANTALLA // 2, 15))  
+        texto_turno_rect = texto_turno.get_rect(center=(ANCHO_PANTALLA // 2, 50))  
         pantalla.blit(texto_turno, texto_turno_rect)
-
-        #  tablero 6x6
-        for fila in range(6):
-            for col in range(6):
+        for fila in range(3):
+            for col in range(3):
                 rect_x = inicio_x + col * (ancho_rect + distancia)
                 rect_y = inicio_y + fila * (alto_rect + distancia)
                 color_rect = matriz_colores[fila][col]
